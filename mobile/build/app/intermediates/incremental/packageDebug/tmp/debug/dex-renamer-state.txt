@@ -1,0 +1,4 @@
+#Tue Jul 16 17:48:10 PDT 2019
+base.0=/home/ivan/show_feeder/build/app/intermediates/transforms/dexMerger/debug/0
+path.0=classes.dex
+renamed.0=classes.dex

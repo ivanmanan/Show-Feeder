@@ -1,27 +1,68 @@
 # Show Feeder
 
 ## About
-Show Feeder is an application that displays the release dates for your favorite TV show seasons and anticipated movies. 
+Show Feeder is an application that displays the release dates for
+your favorite TV shows and movies.
 
-The **Home** page consists of a list of your favorite shows sorted by date. Clicking on a show reveals its Rotten Tomatoes or Metacritic ratings for previous seasons and/or relevant shows as well as the distribution of the show (e.g. Netflix, HBO).
+The **Home** screen consists of a list of your favorite shows sorted
+by date. Clicking on a show gives you the option to remove it from
+your favorites list.
 
-This application also has a **search** page that displays highly anticipated shows and synopsis preview. The searchbar is used to search for specific titles to add onto the Home page. Pressing the heart icon would add the title to the favorites list.
-
-All show favorites lists are saved onto the server.
-
-Notifications are displayed at time of show release.
-
-The future of Show Feeder is for future Google Play Store release.
-
-## Firestore
-* User Collection - user id, username, password, user-favorites-list
-* Shows Collection - title-info object
+The **Add Show** screen enables you to add your own show.
 
 ## Specs
-* Add Shows - setup data for most anticipated shows depending on the month
-* Infrastructure - setup the flutter-firestore integration, which may require refactoring some code base in order to work with the StreamBuilder widget, unless can do single queries in the `/data/database.dart` file.
-* Infrastructure - create user accounts using Google authentication, have login screen, and have user session saved as a state
-* Infrastructure - create a script to retrieve all show titles and releases and save into firestore; a separate script file would update the database; see [this API link](https://developers.themoviedb.org/3/tv/get-popular-tv-shows)
-* Infrastructure - place all sensitive content onto the `.gitignore` file
-* Infrastructure - ding a notification at show's release date at 9 AM
-* Infrastructure - create script that updates firebase database with new shows; it would also remove old shows from both the all shows collection and every user favorites collection
+* FIRST TASK - render the data from Node.js database. NOTE: Dart
+  should serialize the json data, since json data will be read by
+  both React.js frontend and Flutter mobile frontend. Should also
+  create a Favorites tab. https://stackoverflow.com/questions/49914136/how-to-integrate-flutter-app-with-node-js
+* SECOND TASK - customize Flutter app to render based on user account.
+* Favorites - display list of TV shows I enjoy; also have an "Add
+  Favorite" button for database insertion; clicking on favorite
+  button enables user to remove it from database.
+* Add Shows - should be a form that submits a POST request to the
+  MySQL db. Form should contain movie Title, then day/month/year.
+* Home - should refresh data after detecting a POST request OR a
+  database change.
+* Home - when selecting a show, render an edit button to modify text
+  and date. Then do a PUT request.
+* Infrastructure - ding a notification at show's release date at 9 AM.
+* Front-end - create the React.js source code so I can type
+  everything onto the computer.
+* Testing - see what happens when duplicate show title is added. See
+  what happens when a sql query fails on server. See what happens
+  when I insert date and non-existent month into the forms and what
+  gets rendered.
+* Hosting - see 3rd party service to host web server and
+  database for free (or up to 1000 mb). Must make mobile app and
+  front-end secure via having user login correlate to database. Then
+  have user account forever cached.
+
+## Server Setup
+1. Modify configuration settings.
+```bash
+mv server/skeleton-configs.js server/configs.js
+nano server/configs.js
+```
+
+2. Install `mysql`.
+```bash
+sudo apt install mysql-server
+sudo mysql -u root
+mysql> SELECT User,Host FROM mysql.user;
+mysql> DROP USER 'root'@'localhost';
+mysql> CREATE USER 'root'@'localhost' IDENTIFIED BY 'YOUR_PASSWORD';
+mysql> GRANT ALL PRIVILEGES ON *.* TO 'root'@'localhost' WITH GRANT OPTION;
+mysql> FLUSH PRIVILEGES;
+mysql> exit;
+mysql -u root -pYOUR_PASSWORD < server/drop_create_tables.sql
+```
+
+3. Install npm packages.
+```bash
+npm install --prefix server/
+```
+
+4. Run Node.js server. TODO: Make sure below commands are updated
+```bash
+sudo apt install pw2
+```
