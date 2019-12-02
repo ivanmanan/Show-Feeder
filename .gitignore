@@ -1,4 +1,7 @@
-# TODO: Must find out which files are holding API keys in order to specify them here
+# Server Sensitive Content
+configs.js
+server/node_modules/*
+
 /android/*
 /ios/*
 
