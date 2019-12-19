@@ -14,7 +14,7 @@ CREATE TABLE shows (
 
 CREATE TABLE favorites (
        id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
-       title varchar(255) NOT NULL UNIQUE,
+       title varchar(255) NOT NULL UNIQUE
 );
 
 INSERT INTO shows (title, day, month, year) VALUES ("Bojack Horseman: Season 6 (Pt 2)", 31, "January", 2020);

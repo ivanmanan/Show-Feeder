@@ -1,60 +1,51 @@
-import "package:cloud_firestore/cloud_firestore.dart";
+import 'package:http/http.dart';
 
 import "../models/title_info.dart";
 import "dart:collection";
+import "dart:convert";
 
 class Database extends TitleInfo {
 
-  // Database retrieval is done once here
-  // TODO: This must be called from the database
-  // TODO: This must be automated such that username is accessible in this file
-  /*
-  static List<String> anticipatedShows() async {
-    List<String> shows;
-    await Firestore.instance.collection("shows").snapshots().forEach((snapshot) => {
-      shows.add(snapshot.toString())
-    });
-    return shows;
-  }
-  */
-  static final collection = Firestore.instance.collection("shows").snapshots();
-
-  //static final allShows = collection.getDocuments();
-
-  static final List<String> anticipatedShows = [
-    "Joker",
+  static final List<String> mockShows = [
+    "Rick and Morty",
   ];
 
-  static List<String> fetchAnticipatedShows() {
-    //return Database.anticipatedShows;
-    List<String> shows;
 
-    Database.collection.forEach((snapshot) => {
-      //shows.add(snapshot.toString())
-      print(snapshot.toString())
-    });
+  static _makeGetRequest(String type) async {
 
-    //print(Database.collection.toString());
-    //print(shows); // TODO: TESTING
-    return Database.anticipatedShows;
+    String url = "http://10.0.2.2:3000/get/" + type;
+    Response response = await get(url);
+
+    if(response.statusCode == 200) {
+      // TODO: Return a list
+      return [];
+      //return response.body;
+    }
+    else {
+      return [];
+    }
+  }
+
+  static List<String> fetchFavoriteShows() {
+
+    var data = _makeGetRequest("favorites");
+    print(data);
+
+    // TODO: Source of error comes from here
+    //       Need to figure out how to assure data is a List<String>
+    return data;
   }
 
   static final SplayTreeMap yearMonths = SplayTreeMap.from({
-    2019: ["June_2019"],
+    2019: ["October_2019"],
   });
 
   static final monthYearFavorites = {
-    "June_2019": ["Spider-Man: Far From Home"]
-  };
-
-  // NOTE: favorites set must have values in the monthYearFavorites map
-  static final favorites = {
-    "Spider-Man: Far From Home",
+    "October_2019": ["Joker"]
   };
 
   static final titleInfo = {
-    "Spider-Man: Far From Home": TitleInfo(title: "Spider-Man: Far From Home", day: 2, month: "June", year: 2019),
-    "Joker": TitleInfo(title: "Joker", day: 4, month: "October", year: 2019),
+    "Joker": TitleInfo(title: "Joker", day: 4, month: "October", year: 2019)
   };
 
   static SplayTreeMap fetchYearMonthsMap() {

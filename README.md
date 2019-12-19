@@ -22,8 +22,6 @@ The **Add Show** screen enables you to add your own show.
   MySQL db. Form should contain movie Title, then day/month/year.
 * Home - should refresh data after detecting a POST request OR a
   database change.
-* Home - when selecting a show, render an edit button to modify text
-  and date. Then do a PUT request.
 * Infrastructure - ding a notification at show's release date at 9 AM.
 * Front-end - create the React.js source code so I can type
   everything onto the computer.

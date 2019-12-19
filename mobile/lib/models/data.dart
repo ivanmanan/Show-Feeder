@@ -1,8 +1,8 @@
 import "package:flutter/material.dart";
 import "dart:collection";
 
-//import "../data/database.dart";
-import "../data/mock_data.dart";
+import "../data/database.dart";
+// import "../data/mock_data.dart";
 import "title_info.dart";
 
 const List<String> allMonths = ["January", "February", "March", "April",
@@ -27,10 +27,10 @@ class Data with ChangeNotifier {
 
   // TODO: All these should be replaced with database queries
 
-  static final SplayTreeMap _yearMonthsMap = MockData.fetchYearMonthsMap();
-  static final Map _monthYearFavoritesMap = MockData.fetchMonthYearFavoritesMap();
-  static final Map _titleInfoMap = MockData.fetchTitleInfoMap();
-  static final List<String> _favoriteShows = MockData.fetchFavoriteShows();
+  static final SplayTreeMap _yearMonthsMap = Database.fetchYearMonthsMap();
+  static final Map _monthYearFavoritesMap = Database.fetchMonthYearFavoritesMap();
+  static final Map _titleInfoMap = Database.fetchTitleInfoMap();
+  static final List<String> _favoriteShows = Database.fetchFavoriteShows();
 
 
   // Retrieve data from firestore, then make them into correct data structures here
@@ -64,7 +64,7 @@ class Data with ChangeNotifier {
     notifyListeners();
   }
 
-  // TODO: This function must also make MockData queries for the back-end
+  // TODO: Include database query
   void handleAddShow(TitleInfo info) {
     String month = info.month;
     int year = info.year;
@@ -105,7 +105,7 @@ class Data with ChangeNotifier {
     months.sort((a, b) => sortingOrder.indexOf(a).compareTo(sortingOrder.indexOf(b)));
   }
 
-  // TODO: This function must also make MockData queries for the back-end
+  // TODO: Include database query
   void handleRemoveShow(TitleInfo info) {
     String month = info.month;
     int year = info.year;

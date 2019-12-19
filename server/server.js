@@ -1,17 +1,19 @@
 const express = require('express'),
       app = express(),
-      port = process.env.PORT || 3000;
+      port = 3000;
+
+const SUCCESS = 200;
+const SERVER_ERROR = 500;
 
 app.listen(port);
 
-console.log('Show Feeder RESTful API server started on: ' + port);
+console.log("Show Feeder RESTful API server started on:", port);
 
 /////////////////////////////////////////////////////////////////////
 // Auxiliary Functions
 function errorMessage(message) {
   console.log("\x1b[36m%s\x1b[0m", "ERROR: " + message + "\n");
 }
-
 
 /////////////////////////////////////////////////////////////////////
 // MySQL Database
@@ -37,29 +39,39 @@ connection.connect(function(err) {
 /////////////////////////////////////////////////////////////////////
 // HTTP Methods
 
-app.get("/shows", (req, res) => {
+app.get("/get/:type", (req, res) => {
+
+  // table can be either "shows" or "favorites"
+  const table = req.params.type;
 
   console.log("Running query...");
-  const query = `SELECT * FROM shows;`;
-  console.log(query + "\n");
+  const query = `SELECT * FROM ${table};`;
+  console.log(query, "\n");
 
   connection.query(query, (err, shows, fields) => {
     try {
       if(err) {
         throw err;
       }
+      res.status(SUCCESS);
+      res.contentType("application/json");
 
+      const listShows = shows.map(s => s.title);
+
+      res.send(JSON.stringify(listShows));
     }
     catch(e) {
       errorMessage(e);
       const empty = [];
-      res.contentType('application/json');
+      res.status(SERVER_ERROR);
+      res.contentType("application/json");
       res.send(JSON.stringify(empty));
     }
   });
 });
 
-app.post("/add", (req, res) => {
+
+app.post("/addShow", (req, res) => {
 
   const title = "testing";
   const day = 5;
@@ -81,20 +93,14 @@ app.post("/add", (req, res) => {
       errorMessage(e);
     }
   });
-
-
-
 });
 
-app.put("/update", (req, res) => {
 
+app.post("/addFavorite", (req, res) => {
   const title = "testing";
-  const day = 5;
-  const month = "January";
-  const year = 2020;
 
   console.log("Running query...");
-  const query = `UPDATE shows SET title="${title}", day=${day}, month="${month}", year=${year} WHERE title=${title};`;
+  const query = `INSERT INTO favorites (title) VALUES ("${title}");`;
   console.log(query + "\n");
 
   connection.query(query, (err, shows, fields) => {
@@ -108,16 +114,16 @@ app.put("/update", (req, res) => {
       errorMessage(e);
     }
   });
+})
 
 
-});
-
-app.delete("/remove", (req, res) => {
+app.delete("/remove/:type", (req, res) => {
 
   const title = "testing";
+  const table = req.params.type;
 
   console.log("Running query...");
-  const query = `DELETE FROM shows WHERE title=${title};`;
+  const query = `DELETE FROM ${table} WHERE title=${title};`;
   console.log(query + "\n");
 
   connection.query(query, (err, shows, fields) => {

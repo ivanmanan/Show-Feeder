@@ -67,7 +67,7 @@ class AddShowFormState extends State<AddShowForm> {
               padding: const EdgeInsets.symmetric(vertical: 30.0),
               child: RaisedButton(
                 onPressed: () {
-                  if (_formKey.currentState.validate()) {
+                  if(_formKey.currentState.validate()) {
                     // If the form is valid, display a Snackbar.
                     Scaffold.of(context)
                       .showSnackBar(SnackBar(content: Text("Adding Show...")));
@@ -93,7 +93,7 @@ class AddShowFormState extends State<AddShowForm> {
               padding: const EdgeInsets.symmetric(vertical: 0.0),
               child: RaisedButton(
                 onPressed: () {
-                  if (_formKey.currentState.validate()) {
+                  if (_showTitle.text.length != 0) {
                     // If the form is valid, display a Snackbar.
                     Scaffold.of(context)
                       .showSnackBar(SnackBar(content: Text("Adding to Favorites...")));
