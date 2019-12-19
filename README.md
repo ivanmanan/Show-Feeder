@@ -4,9 +4,11 @@
 Show Feeder is an application that displays the release dates for
 your favorite TV shows and movies.
 
-The **Home** screen consists of a list of your favorite shows sorted
+The **Home** screen renders a list of anticipated shows sorted
 by date. Clicking on a show gives you the option to remove it from
-your favorites list.
+your Home list.
+
+The **Favorites** screen renders a list of your favorite shows.
 
 The **Add Show** screen enables you to add your own show.
 
@@ -15,10 +17,7 @@ The **Add Show** screen enables you to add your own show.
   should serialize the json data, since json data will be read by
   both React.js frontend and Flutter mobile frontend. Should also
   create a Favorites tab. https://stackoverflow.com/questions/49914136/how-to-integrate-flutter-app-with-node-js
-* SECOND TASK - customize Flutter app to render based on user account.
-* Favorites - display list of TV shows I enjoy; also have an "Add
-  Favorite" button for database insertion; clicking on favorite
-  button enables user to remove it from database.
+* Must add authentication. Have user authentication cached forever.
 * Add Shows - should be a form that submits a POST request to the
   MySQL db. Form should contain movie Title, then day/month/year.
 * Home - should refresh data after detecting a POST request OR a
@@ -32,10 +31,8 @@ The **Add Show** screen enables you to add your own show.
   what happens when a sql query fails on server. See what happens
   when I insert date and non-existent month into the forms and what
   gets rendered.
-* Hosting - see 3rd party service to host web server and
-  database for free (or up to 1000 mb). Must make mobile app and
-  front-end secure via having user login correlate to database. Then
-  have user account forever cached.
+* Hosting - see RedHat Openshift; note I must resubscribe every 2 hours. Make
+  documentation how to rehost the server. Simply use the Docker image.
 
 ## Server Setup
 1. Modify configuration settings.
