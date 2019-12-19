@@ -28,7 +28,7 @@ class Database extends TitleInfo {
   static List<String> fetchAnticipatedShows() {
     //return Database.anticipatedShows;
     List<String> shows;
-    
+
     Database.collection.forEach((snapshot) => {
       //shows.add(snapshot.toString())
       print(snapshot.toString())
@@ -65,14 +65,7 @@ class Database extends TitleInfo {
     return Database.monthYearFavorites;
   }
 
-  static Set fetchFavoritesSet() {
-    return Database.favorites;
-  }
-
   static Map fetchTitleInfoMap() {
-
-    
-
     return Database.titleInfo;
   }
 }

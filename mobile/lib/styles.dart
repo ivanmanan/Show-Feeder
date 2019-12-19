@@ -35,4 +35,9 @@ class Styles {
     fontWeight: FontWeight.bold,
     color: Colors.black,
   );
+
+  static const pad = 5.0;
+  static const padContent = 40.0;
+  static const textPaddingHeader = EdgeInsets.all(pad);
+  static const textPaddingContent = EdgeInsets.fromLTRB(pad, pad, pad, padContent);
 }

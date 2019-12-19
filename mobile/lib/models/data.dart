@@ -8,18 +8,37 @@ import "title_info.dart";
 const List<String> allMonths = ["January", "February", "March", "April",
   "May", "June", "July", "August", "September", "October", "November", "December"];
 
+const Map intToMonth = {
+  1 : "January",
+  2 : "February",
+  3 : "March",
+  4 : "April",
+  5 : "May",
+  6 : "June",
+  7 : "July",
+  8 : "August",
+  9 : "September",
+  10 : "October",
+  11 : "November",
+  12 : "December"
+};
+
 class Data with ChangeNotifier {
 
-  // TODO: Add constructor with username
+  // TODO: All these should be replaced with database queries
 
   static final SplayTreeMap _yearMonthsMap = MockData.fetchYearMonthsMap();
   static final Map _monthYearFavoritesMap = MockData.fetchMonthYearFavoritesMap();
   static final Map _titleInfoMap = MockData.fetchTitleInfoMap();
-  static final Set _favoritesSet = MockData.fetchFavoritesSet();
-  static final List<String> _anticipatedShows = MockData.fetchAnticipatedShows();
+  static final List<String> _favoriteShows = MockData.fetchFavoriteShows();
 
 
   // Retrieve data from firestore, then make them into correct data structures here
+  List<String> fetchFavoriteShows() {
+    _favoriteShows.sort();
+    return _favoriteShows;
+  }
+
   SplayTreeMap fetchYearMonthsMap() {
     return _yearMonthsMap;
   }
@@ -32,21 +51,27 @@ class Data with ChangeNotifier {
     return _monthYearFavoritesMap;
   }
 
-  Set fetchFavoriteShows() {
-    return _favoritesSet;
+  // TODO: Include database query
+  void handleAddFavorite(String title) {
+    _favoriteShows.add(title);
+    _favoriteShows.sort();
+    notifyListeners();
   }
 
-  List<String> fetchAnticipatedShows() {
-    return _anticipatedShows;
+  // TODO: Include database query
+  void handleRemoveFavorite(String title) {
+    _favoriteShows.remove(title);
+    notifyListeners();
   }
 
   // TODO: This function must also make MockData queries for the back-end
-  void handleAddFavorite(TitleInfo info) {
+  void handleAddShow(TitleInfo info) {
     String month = info.month;
     int year = info.year;
     String monthYear = month + "_" + year.toString();
-    _favoritesSet.add(info.title);
-    
+
+    _titleInfoMap[info.title] = info;
+
     if(_yearMonthsMap.containsKey(year)) {
       // Check if month exists
       if(!_yearMonthsMap[year].contains(monthYear)) {
@@ -81,13 +106,10 @@ class Data with ChangeNotifier {
   }
 
   // TODO: This function must also make MockData queries for the back-end
-  void handleRemoveFavorite(TitleInfo info) {
+  void handleRemoveShow(TitleInfo info) {
     String month = info.month;
     int year = info.year;
     String monthYear = month + "_" + year.toString();
-
-    // Remove show from Favorites list
-    _favoritesSet.remove(info.title);
 
     // Remove show from monthYearFavorites map
     List<String> favoriteShows = _monthYearFavoritesMap[monthYear];

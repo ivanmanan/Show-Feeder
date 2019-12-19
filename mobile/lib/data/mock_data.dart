@@ -7,7 +7,7 @@ import "dart:collection";
 
 class MockData extends TitleInfo {
 
-  static final List<String> anticipatedShows = [
+  static final List<String> favoriteShows = [
     "The Bojack Horseman Show: Season 6",
     "South Park: Season 24",
     "Joker",
@@ -16,8 +16,8 @@ class MockData extends TitleInfo {
     "It Chapter Two"
   ];
 
-  static List<String> fetchAnticipatedShows() {
-    return MockData.anticipatedShows;
+  static List<String> fetchFavoriteShows() {
+    return MockData.favoriteShows;
   }
 
   static final SplayTreeMap yearMonths = SplayTreeMap.from({
@@ -30,16 +30,6 @@ class MockData extends TitleInfo {
     "October_2019": ["Joker", "Zombieland: Double Tap"],
     "April_2020": ["The New Mutants"],
     "September_2019": ["It Chapter Two", "South Park: Season 24"],
-  };
-
-  // NOTE: favorites set must have values in the monthYearFavorites map
-  static final favorites = {
-    "Spider-Man: Far From Home",
-    "Joker", 
-    "Zombieland: Double Tap",
-    "The New Mutants",
-    "It Chapter Two",
-    "South Park: Season 24"
   };
 
   static final titleInfo = {
@@ -58,10 +48,6 @@ class MockData extends TitleInfo {
 
   static Map fetchMonthYearFavoritesMap() {
     return MockData.monthYearFavorites;
-  }
-
-  static Set fetchFavoritesSet() {
-    return MockData.favorites;
   }
 
   static Map fetchTitleInfoMap() {

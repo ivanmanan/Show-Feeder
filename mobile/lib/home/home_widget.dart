@@ -8,8 +8,7 @@ class Home extends StatelessWidget {
 
   final Map monthYearFavoritesMap, titleInfoMap;
   final SplayTreeMap yearMonthsMap;
-  final Set favoritesSet;
-  Home(this.monthYearFavoritesMap, this.yearMonthsMap, this.titleInfoMap, this.favoritesSet);
+  Home(this.monthYearFavoritesMap, this.yearMonthsMap, this.titleInfoMap);
 
   @override
   Widget build(BuildContext context) {
@@ -107,7 +106,7 @@ class Home extends StatelessWidget {
           elevation: 1, // controls the card's box shadow
           child: ListTile(
             title: Text(favorite, style: Styles.titleText),
-            contentPadding: EdgeInsets.fromLTRB(24.0, 4.0, 24.0, 4.0),            
+            contentPadding: EdgeInsets.fromLTRB(24.0, 4.0, 24.0, 4.0),
             onTap: () => _tapTitle(context, favorite),
           ),
         ),
@@ -115,16 +114,10 @@ class Home extends StatelessWidget {
     );
   }
 
-  // NOTE: On tap, content should only appear immediately below title card
-  //       screen for a certain amount of space - title would be highlighted,
-  //       and user must tap title again to hide content screen
-  // NOTE: Flutter does not have convenient onTap gesture to vertically expand
-  //       Card/ListTile widgets
-  // TEMPORARY: Open new screen for development simplicity
   void _tapTitle(BuildContext context, String title) {
     TitleInfo info = titleInfoMap[title];
     Navigator.push(context, MaterialPageRoute(
-      builder: (context) => TitleDetail(info, favoritesSet.contains(title)),
+      builder: (context) => TitleDetail(info),
     ));
   }
 
@@ -133,12 +126,12 @@ class Home extends StatelessWidget {
       padding: EdgeInsets.fromLTRB(60.0, 0.0, 60.0, 0.0),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.stretch,          
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
           Container(
             padding: EdgeInsets.all(20.0),
             child: Text(
-              "Show Feeder displays your upcoming shows and their release dates.", 
+              "Show Feeder displays your upcoming shows and their release dates.",
               style: Styles.regularText,
             ),
           ),
@@ -153,7 +146,7 @@ class Home extends StatelessWidget {
                   ),
                   TextSpan(
                     text: "Add Show ",
-                    style: Styles.regularTextBold,  
+                    style: Styles.regularTextBold,
                   ),
                   TextSpan(
                     text: "tab at the bottom of the screen.",
@@ -168,11 +161,3 @@ class Home extends StatelessWidget {
   }
 
 }
-
-
-/*
-  SPECS
-  TODO: the films would be sorted in chronological order
-        you select the title to reveal its actual release date
-        Films remain on the app for 2 weeks unless the user removes it from his/her list
-*/
