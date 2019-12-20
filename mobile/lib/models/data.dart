@@ -1,9 +1,12 @@
+import 'package:http/http.dart';
 import "package:flutter/material.dart";
 import "dart:collection";
 
 import "../data/database.dart";
 // import "../data/mock_data.dart";
 import "title_info.dart";
+
+const SERVER = "http://192.168.1.117:3000/";
 
 const List<String> allMonths = ["January", "February", "March", "April",
   "May", "June", "July", "August", "September", "October", "November", "December"];
@@ -31,11 +34,9 @@ class Data with ChangeNotifier {
   static final Map _monthYearFavoritesMap = Database.fetchMonthYearFavoritesMap();
   static final Map _titleInfoMap = Database.fetchTitleInfoMap();
 
-  // TODO: Convert Future<dynamic> to List<String>
-  static final List<String> _favoriteShows = Database.fetchFavoriteShows();
+  static final Future<dynamic> _favoriteShows = Database.fetchFavoriteShows();
 
-  List<String> fetchFavoriteShows() {
-    _favoriteShows.sort();
+  Future<dynamic> fetchFavoriteShows() {
     return _favoriteShows;
   }
 
@@ -51,16 +52,9 @@ class Data with ChangeNotifier {
     return _monthYearFavoritesMap;
   }
 
-  // TODO: Include database query
-  void handleAddFavorite(String title) {
-    _favoriteShows.add(title);
-    _favoriteShows.sort();
-    notifyListeners();
-  }
-
-  // TODO: Include database query
-  void handleRemoveFavorite(String title) {
-    _favoriteShows.remove(title);
+  handleRemoveShow(String title, String type) async {
+    String url = SERVER + "remove/" + type + "/" + title;
+    await delete(url);
     notifyListeners();
   }
 
@@ -106,30 +100,30 @@ class Data with ChangeNotifier {
   }
 
   // TODO: Include database query
-  void handleRemoveShow(TitleInfo info) {
-    String month = info.month;
-    int year = info.year;
-    String monthYear = month + "_" + year.toString();
+  // void handleRemoveShow(TitleInfo info) {
+  //   String month = info.month;
+  //   int year = info.year;
+  //   String monthYear = month + "_" + year.toString();
 
     // Remove show from monthYearFavorites map
-    List<String> favoriteShows = _monthYearFavoritesMap[monthYear];
-    if(favoriteShows.length == 1) {
-      _monthYearFavoritesMap.remove(monthYear);
+  //   List<String> favoriteShows = _monthYearFavoritesMap[monthYear];
+  //   if(favoriteShows.length == 1) {
+  //     _monthYearFavoritesMap.remove(monthYear);
 
-      // Also remove month from the Year map
-      List<String> months = _yearMonthsMap[year];
-      if(months.length == 1) {
-        _yearMonthsMap.remove(year);
-      }
-      else {
-        months.remove(monthYear);
-        _yearMonthsMap[year] = months;
-      }
-    }
-    else { // Otherwise, another show is released in the same month
-      favoriteShows.remove(info.title);
-      _monthYearFavoritesMap[monthYear] = favoriteShows;
-    }
-    notifyListeners();
-  }
+  //     // Also remove month from the Year map
+  //     List<String> months = _yearMonthsMap[year];
+  //     if(months.length == 1) {
+  //       _yearMonthsMap.remove(year);
+  //     }
+  //     else {
+  //       months.remove(monthYear);
+  //       _yearMonthsMap[year] = months;
+  //     }
+  //   }
+  //   else { // Otherwise, another show is released in the same month
+  //     favoriteShows.remove(info.title);
+  //     _monthYearFavoritesMap[monthYear] = favoriteShows;
+  //   }
+  //   notifyListeners();
+  // }
 }

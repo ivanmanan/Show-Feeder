@@ -1,4 +1,3 @@
-// import 'package:sync_http/sync_http.dart' as sync_http;
 import 'package:http/http.dart';
 
 import "../models/title_info.dart";
@@ -6,7 +5,7 @@ import "dart:collection";
 import "dart:convert";
 
 // TODO: ifconfig | grep 192
-const IP_ADDRESS = "192.168.1.117";
+const SERVER = "http://192.168.1.117:3000/";
 
 class Database extends TitleInfo {
 
@@ -15,19 +14,19 @@ class Database extends TitleInfo {
   ];
 
   static GetShows(String type) async {
-    String url = "http://" + IP_ADDRESS + ":3000/get/" + type;
+    String url = SERVER + "get/" + type;
     Response response = await get(url);
 
     var data = response.body;
     if(response.statusCode == 200) {
-      return json.decode(data).cast<String>();
+      List<String> shows = (jsonDecode(data) as List<dynamic>).cast<String>();
+      return shows;
     }
     else {
       return [];
     }
   }
 
-  // TODO: Have the GET request working
   static Future<dynamic> fetchFavoriteShows() {
     return GetShows("favorites");
   }

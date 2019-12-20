@@ -87,10 +87,11 @@ app.post("/addShow", (req, res) => {
       if(err) {
         throw err;
       }
-
+      res.status(SUCCESS);
     }
     catch(e) {
       errorMessage(e);
+      res.status(SERVER_ERROR);
     }
   });
 });
@@ -108,33 +109,36 @@ app.post("/addFavorite", (req, res) => {
       if(err) {
         throw err;
       }
-
+      res.status(SUCCESS);
     }
     catch(e) {
       errorMessage(e);
+      res.status(SERVER_ERROR);
     }
   });
 })
 
 
-app.delete("/remove/:type", (req, res) => {
+app.delete("/remove/:type/:title", (req, res) => {
 
-  const title = "testing";
+  const title = req.params.title;
   const table = req.params.type;
 
   console.log("Running query...");
-  const query = `DELETE FROM ${table} WHERE title=${title};`;
-  console.log(query + "\n");
+  const query = `DELETE FROM ${table} WHERE title="${title}";`;
+  console.log(query, "\n");
 
   connection.query(query, (err, shows, fields) => {
     try {
       if(err) {
         throw err;
       }
+      res.status(SUCCESS);
 
     }
     catch(e) {
       errorMessage(e);
+      res.status(SERVER_ERROR);
     }
   });
 

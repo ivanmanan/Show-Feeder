@@ -7,47 +7,54 @@ import "../models/remove_scroll_glow.dart";
 
 class Favorites extends StatelessWidget {
 
-  final List<String> favoriteShows;
+  final Future<dynamic> favoriteShows;
   Favorites(this.favoriteShows);
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.fromLTRB(50.0, 40.0, 50.0, 40.0),
-      child: ScrollConfiguration(
-        behavior: RemoveScrollGlow(),
-        child: ListView(children: <Widget>[
-          Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: <Widget>[
-              Container(
-                child: Center(
-                  child: Text(
-                    "Favorite Shows",
-                    textAlign: TextAlign.center,
-                    style: Styles.headerOneText,
+    return FutureBuilder<dynamic>(
+      future: favoriteShows,
+      builder: (context, snapshot) {
+        List<String> shows = snapshot.data ?? [];
+        shows.sort();
+        return Container(
+          padding: EdgeInsets.fromLTRB(50.0, 40.0, 50.0, 40.0),
+          child: ScrollConfiguration(
+            behavior: RemoveScrollGlow(),
+            child: ListView(children: <Widget>[
+              Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  Container(
+                    child: Center(
+                      child: Text(
+                        "Favorite Shows",
+                        textAlign: TextAlign.center,
+                        style: Styles.headerOneText,
+                      ),
+                    ),
+                    margin: EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 30.0),
                   ),
-                ),
-                margin: EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 30.0),
+                  Container(
+                    child: Center(
+                      child: _buildFavoriteShows(shows),
+                    ),
+                  ),
+                ],
               ),
-              Container(
-                child: Center(
-                  child: _buildFavoriteShows(),
-                ),
-              ),
-            ],
+            ])
           ),
-        ])
-      ),
+        );
+      }
     );
   }
 
-    Widget _buildFavoriteShows() {
+    Widget _buildFavoriteShows(shows) {
     return ListView.builder(
       itemBuilder: (context, index) =>
-          _buildFavoriteShow(context, favoriteShows[index]),
-      itemCount: favoriteShows.length,
+          _buildFavoriteShow(context, shows[index]),
+      itemCount: shows.length,
       physics: ClampingScrollPhysics(), // removes scrolling in nested ListViews
       shrinkWrap: true,
     );
@@ -104,7 +111,7 @@ class Favorites extends StatelessWidget {
   }
 
   void _removeFavorite(BuildContext context, String title) {
-    Provider.of<Data>(context, listen: true).handleRemoveFavorite(title);
+    Provider.of<Data>(context, listen: true).handleRemoveShow(title, "favorites");
   }
 }
 

@@ -72,6 +72,6 @@ class _TitleDetail extends State<TitleDetail> {
   }
 
   void _removeShow(BuildContext context, TitleInfo info) {
-    Provider.of<Data>(context, listen: true).handleRemoveShow(info);
+    Provider.of<Data>(context, listen: true).handleRemoveShow(info.title, "shows");
   }
 }

@@ -13,6 +13,8 @@ The **Favorites** screen renders a list of your favorite shows.
 The **Add Show** screen enables you to add your own show.
 
 ## Specs
+* Move all HTTP methods within the specific widget classes; I will depend on
+  the widgets to fetch API's at every screen change
 * FIRST TASK - render the data from Node.js database. NOTE: Dart
   should serialize the json data, since json data will be read by
   both React.js frontend and Flutter mobile frontend. Should also
