@@ -14,23 +14,11 @@ The **Add Show** screen enables you to add your own show.
 
 ## Specs
 * Move all HTTP methods within the specific widget classes; I will depend on
-  the widgets to fetch API's at every screen change
-* FIRST TASK - render the data from Node.js database. NOTE: Dart
-  should serialize the json data, since json data will be read by
-  both React.js frontend and Flutter mobile frontend. Should also
-  create a Favorites tab. https://stackoverflow.com/questions/49914136/how-to-integrate-flutter-app-with-node-js
+  the widgets to fetch API's at every screen change (unfortunately)
 * Must add authentication. Have user authentication cached forever.
-* Add Shows - should be a form that submits a POST request to the
-  MySQL db. Form should contain movie Title, then day/month/year.
-* Home - should refresh data after detecting a POST request OR a
-  database change.
+* Add Shows - Implement the POST request for anticipated show.
+* Home - should refresh data after detecting a database change.
 * Infrastructure - ding a notification at show's release date at 9 AM.
-* Front-end - create the React.js source code so I can type
-  everything onto the computer.
-* Testing - see what happens when duplicate show title is added. See
-  what happens when a sql query fails on server. See what happens
-  when I insert date and non-existent month into the forms and what
-  gets rendered.
 * Hosting - see RedHat Openshift; note I must resubscribe every 2 hours. Make
   documentation how to rehost the server. Simply use the Docker image.
 

@@ -117,6 +117,7 @@ class Home extends StatelessWidget {
   void _tapTitle(BuildContext context, String title) {
     TitleInfo info = titleInfoMap[title];
     Navigator.push(context, MaterialPageRoute(
+      // TODO: Pass callback here to remove title from cached arrays
       builder: (context) => TitleDetail(info),
     ));
   }

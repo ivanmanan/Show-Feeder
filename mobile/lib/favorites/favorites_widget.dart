@@ -53,14 +53,14 @@ class Favorites extends StatelessWidget {
     Widget _buildFavoriteShows(shows) {
     return ListView.builder(
       itemBuilder: (context, index) =>
-          _buildFavoriteShow(context, shows[index]),
+          _buildFavoriteShow(context, shows[index], () => shows.remove(shows[index])),
       itemCount: shows.length,
       physics: ClampingScrollPhysics(), // removes scrolling in nested ListViews
       shrinkWrap: true,
     );
   }
 
-  Widget _buildFavoriteShow(BuildContext context, String show) {
+  Widget _buildFavoriteShow(BuildContext context, String show, callbackRemoveShow) {
     return Container(
       margin: EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 20.0),
       child: Card(
@@ -68,13 +68,13 @@ class Favorites extends StatelessWidget {
         child: ListTile(
           title: Text(show, style: Styles.titleText),
           contentPadding: EdgeInsets.all(10.0),
-          onTap: () => _tapTitle(context, show)
+          onTap: () => _tapTitle(context, show, callbackRemoveShow)
         ),
       ),
     );
   }
 
-  void _tapTitle(BuildContext context, String title) {
+  void _tapTitle(BuildContext context, String title, callbackRemoveShow) {
     Navigator.push(context, MaterialPageRoute(
       builder: (context) => Scaffold(
         appBar: AppBar(title: Text(title)),
@@ -87,7 +87,7 @@ class Favorites extends StatelessWidget {
             ),
             Container(
               padding: EdgeInsets.fromLTRB(0.0, 60.0, 0.0, 0.0),
-              child: _buildButton(context, title)
+              child: _buildButton(context, title, callbackRemoveShow)
             )
           ])
         )
@@ -95,7 +95,7 @@ class Favorites extends StatelessWidget {
     ));
   }
 
-  Widget _buildButton(BuildContext context, String title) {
+  Widget _buildButton(BuildContext context, String title, callbackRemoveShow) {
     return Center(
       child: MaterialButton(
         height: 75.0,
@@ -103,6 +103,7 @@ class Favorites extends StatelessWidget {
         color: Colors.orange[300],
         child: Text("Remove Favorite", style: Styles.regularTextBold),
         onPressed: () => {
+          callbackRemoveShow(),
           _removeFavorite(context, title)
         },
         splashColor: Colors.redAccent,

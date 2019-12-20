@@ -33,3 +33,15 @@ INSERT INTO favorites (title) VALUES ("Stranger Things");
 INSERT INTO favorites (title) VALUES ("Love, Death, and Robots");
 INSERT INTO favorites (title) VALUES ("How to Sell Drugs Online Fast");
 INSERT INTO favorites (title) VALUES ("Sex Education");
+
+INSERT INTO favorites (title) VALUES ("The Haunting of Hill House");
+INSERT INTO favorites (title) VALUES ("");
+INSERT INTO favorites (title) VALUES ("");
+INSERT INTO favorites (title) VALUES ("");
+INSERT INTO favorites (title) VALUES ("");
+INSERT INTO favorites (title) VALUES ("");
+INSERT INTO favorites (title) VALUES ("");
+INSERT INTO favorites (title) VALUES ("");
+INSERT INTO favorites (title) VALUES ("");
+INSERT INTO favorites (title) VALUES ("");
+INSERT INTO favorites (title) VALUES ("");

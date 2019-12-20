@@ -99,8 +99,7 @@ class AddShowFormState extends State<AddShowForm> {
                       .showSnackBar(SnackBar(content: Text("Adding to Favorites...")));
 
                     // Add Show to Favorites list
-                    // TODO: Implement this method using Future<List<String>>
-                    // Provider.of<Data>(context, listen: true).handleAddFavorite(_showTitle.text);
+                    Provider.of<Data>(context, listen: true).handleAddFavorite(_showTitle.text);
                   }
                 },
                 child: Text("Add to Favorites")

@@ -13,7 +13,7 @@ class Database extends TitleInfo {
     "Rick and Morty",
   ];
 
-  static GetShows(String type) async {
+  static getShows(String type) async {
     String url = SERVER + "get/" + type;
     Response response = await get(url);
 
@@ -28,7 +28,7 @@ class Database extends TitleInfo {
   }
 
   static Future<dynamic> fetchFavoriteShows() {
-    return GetShows("favorites");
+    return getShows("favorites");
   }
 
   static final SplayTreeMap yearMonths = SplayTreeMap.from({

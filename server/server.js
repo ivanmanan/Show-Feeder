@@ -97,12 +97,12 @@ app.post("/addShow", (req, res) => {
 });
 
 
-app.post("/addFavorite", (req, res) => {
-  const title = "testing";
+app.post("/addFavorite/:title", (req, res) => {
+  const title = req.params.title;
 
   console.log("Running query...");
   const query = `INSERT INTO favorites (title) VALUES ("${title}");`;
-  console.log(query + "\n");
+  console.log(query, "\n");
 
   connection.query(query, (err, shows, fields) => {
     try {
