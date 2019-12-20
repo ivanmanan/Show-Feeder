@@ -30,10 +30,10 @@ class Data with ChangeNotifier {
   static final SplayTreeMap _yearMonthsMap = Database.fetchYearMonthsMap();
   static final Map _monthYearFavoritesMap = Database.fetchMonthYearFavoritesMap();
   static final Map _titleInfoMap = Database.fetchTitleInfoMap();
+
+  // TODO: Convert Future<dynamic> to List<String>
   static final List<String> _favoriteShows = Database.fetchFavoriteShows();
 
-
-  // Retrieve data from firestore, then make them into correct data structures here
   List<String> fetchFavoriteShows() {
     _favoriteShows.sort();
     return _favoriteShows;

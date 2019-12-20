@@ -1,8 +1,12 @@
+// import 'package:sync_http/sync_http.dart' as sync_http;
 import 'package:http/http.dart';
 
 import "../models/title_info.dart";
 import "dart:collection";
 import "dart:convert";
+
+// TODO: ifconfig | grep 192
+const IP_ADDRESS = "192.168.1.117";
 
 class Database extends TitleInfo {
 
@@ -10,30 +14,22 @@ class Database extends TitleInfo {
     "Rick and Morty",
   ];
 
-
-  static _makeGetRequest(String type) async {
-
-    String url = "http://10.0.2.2:3000/get/" + type;
+  static GetShows(String type) async {
+    String url = "http://" + IP_ADDRESS + ":3000/get/" + type;
     Response response = await get(url);
 
+    var data = response.body;
     if(response.statusCode == 200) {
-      // TODO: Return a list
-      return [];
-      //return response.body;
+      return json.decode(data).cast<String>();
     }
     else {
       return [];
     }
   }
 
-  static List<String> fetchFavoriteShows() {
-
-    var data = _makeGetRequest("favorites");
-    print(data);
-
-    // TODO: Source of error comes from here
-    //       Need to figure out how to assure data is a List<String>
-    return data;
+  // TODO: Have the GET request working
+  static Future<dynamic> fetchFavoriteShows() {
+    return GetShows("favorites");
   }
 
   static final SplayTreeMap yearMonths = SplayTreeMap.from({
