@@ -3,6 +3,7 @@ use showfeeder;
 
 
 DROP TABLE IF EXISTS shows;
+DROP TABLE IF EXISTS favorites;
 
 CREATE TABLE shows (
        id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
@@ -35,13 +36,3 @@ INSERT INTO favorites (title) VALUES ("How to Sell Drugs Online Fast");
 INSERT INTO favorites (title) VALUES ("Sex Education");
 
 INSERT INTO favorites (title) VALUES ("The Haunting of Hill House");
-INSERT INTO favorites (title) VALUES ("");
-INSERT INTO favorites (title) VALUES ("");
-INSERT INTO favorites (title) VALUES ("");
-INSERT INTO favorites (title) VALUES ("");
-INSERT INTO favorites (title) VALUES ("");
-INSERT INTO favorites (title) VALUES ("");
-INSERT INTO favorites (title) VALUES ("");
-INSERT INTO favorites (title) VALUES ("");
-INSERT INTO favorites (title) VALUES ("");
-INSERT INTO favorites (title) VALUES ("");

@@ -1,3 +1,5 @@
+// NOTE: If I could append data to a Future widget, then this file would be used
+
 import "package:flutter/material.dart";
 import "package:provider/provider.dart";
 
@@ -7,39 +9,46 @@ import "../models/remove_scroll_glow.dart";
 
 class Favorites extends StatelessWidget {
 
-  final List<String> favoriteShows;
+  final Future<dynamic> favoriteShows;
   Favorites(this.favoriteShows);
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.fromLTRB(50.0, 40.0, 50.0, 40.0),
-      child: ScrollConfiguration(
-        behavior: RemoveScrollGlow(),
-        child: ListView(children: <Widget>[
-          Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: <Widget>[
-              Container(
-                child: Center(
-                  child: Text(
-                    "Favorite Shows",
-                    textAlign: TextAlign.center,
-                    style: Styles.headerOneText,
+    return FutureBuilder<dynamic>(
+      future: favoriteShows,
+      builder: (context, snapshot) {
+        List<String> shows = snapshot.data ?? [];
+        shows.sort();
+        return Container(
+          padding: EdgeInsets.fromLTRB(50.0, 40.0, 50.0, 40.0),
+          child: ScrollConfiguration(
+            behavior: RemoveScrollGlow(),
+            child: ListView(children: <Widget>[
+              Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  Container(
+                    child: Center(
+                      child: Text(
+                        "Favorite Shows",
+                        textAlign: TextAlign.center,
+                        style: Styles.headerOneText,
+                      ),
+                    ),
+                    margin: EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 30.0),
                   ),
-                ),
-                margin: EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 30.0),
+                  Container(
+                    child: Center(
+                      child: _buildFavoriteShows(shows),
+                    ),
+                  ),
+                ],
               ),
-              Container(
-                child: Center(
-                  child: _buildFavoriteShows(favoriteShows),
-                ),
-              ),
-            ],
+            ])
           ),
-        ])
-      ),
+        );
+      }
     );
   }
 

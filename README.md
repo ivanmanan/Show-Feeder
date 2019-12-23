@@ -1,5 +1,8 @@
 # Show Feeder
 
+## Announcement
+This project is officially closed. I cannot find a way to append data onto the Future widget. Additionally, I cannot find a way to sychronize API calls. Blocking occurs in `/mobile/lib/models/data.dart`.
+
 ## About
 Show Feeder is an application that displays the release dates for
 your favorite TV shows and movies.
@@ -11,16 +14,6 @@ your Home list.
 The **Favorites** screen renders a list of your favorite shows.
 
 The **Add Show** screen enables you to add your own show.
-
-## Specs
-* Move all HTTP methods within the specific widget classes; I will depend on
-  the widgets to fetch API's at every screen change (unfortunately)
-* Must add authentication. Have user authentication cached forever.
-* Add Shows - Implement the POST request for anticipated show.
-* Home - should refresh data after detecting a database change.
-* Infrastructure - ding a notification at show's release date at 9 AM.
-* Hosting - see RedHat Openshift; note I must resubscribe every 2 hours. Make
-  documentation how to rehost the server. Simply use the Docker image.
 
 ## Server Setup
 1. Modify configuration settings.
@@ -47,7 +40,9 @@ mysql -u root -pYOUR_PASSWORD < server/drop_create_tables.sql
 npm install --prefix server/
 ```
 
-4. Run Node.js server. TODO: Make sure below commands are updated
+4. Run Node.js server.
 ```bash
-sudo apt install pw2
+npm start
 ```
+
+5. Check site at `localhost:3000/get/shows` or `localhost:3000/get/favorites`

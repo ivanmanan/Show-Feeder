@@ -7,7 +7,7 @@ import "models/data.dart";
 /*
   To Run Application:
   $ flutter emulators --launch Pixel_2_XL
-  $ cd /path/to/show_feeder
+  $ cd /path/to/show_feeder/mobile
   $ flutter run
 */
 

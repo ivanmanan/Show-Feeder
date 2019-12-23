@@ -2,8 +2,8 @@ import 'package:http/http.dart';
 import "package:flutter/material.dart";
 import "dart:collection";
 
-import "../data/database.dart";
-// import "../data/mock_data.dart";
+// import "../data/database.dart";
+import "../data/mock_data.dart";
 import "title_info.dart";
 
 const SERVER = "http://192.168.1.117:3000/";
@@ -28,16 +28,24 @@ const Map intToMonth = {
 
 class Data with ChangeNotifier {
 
-  // TODO: All these should be replaced with database queries
+  // NOTE: If I could append data to a Future widget, then the below commented code would work
+  // static final SplayTreeMap _yearMonthsMap = Database.fetchYearMonthsMap();
+  // static final Map _monthYearFavoritesMap = Database.fetchMonthYearFavoritesMap();
+  // static final Map _titleInfoMap = Database.fetchTitleInfoMap();
+  // static Future<dynamic> _favoriteShows = Database.fetchFavoriteShows();
 
-  static final SplayTreeMap _yearMonthsMap = Database.fetchYearMonthsMap();
-  static final Map _monthYearFavoritesMap = Database.fetchMonthYearFavoritesMap();
-  static final Map _titleInfoMap = Database.fetchTitleInfoMap();
+  static final SplayTreeMap _yearMonthsMap = MockData.fetchYearMonthsMap();
+  static final Map _monthYearFavoritesMap = MockData.fetchMonthYearFavoritesMap();
+  static final Map _titleInfoMap = MockData.fetchTitleInfoMap();
+  static List<String> _favoriteShows = MockData.fetchFavoriteShows();
 
-  static Future<dynamic> _favoriteShows = Database.fetchFavoriteShows();
+  // NOTE: If I could append data to a Future widget, then the below commented code would work
+  // Future<dynamic> fetchFavoriteShows() {
+  //   return _favoriteShows;
+  // }
 
-  Future<dynamic> fetchFavoriteShows() {
-    return _favoriteShows;
+  List<String> fetchFavoriteShows() {
+  return _favoriteShows;
   }
 
   SplayTreeMap fetchYearMonthsMap() {
@@ -65,7 +73,6 @@ class Data with ChangeNotifier {
     await post(url, headers: headers, body: json);
 
     // TODO: This should update the object, but it is not
-    _favoriteShows = Database.fetchFavoriteShows();
     notifyListeners();
   }
 
